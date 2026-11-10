@@ -6,45 +6,45 @@
 
 ## 📌 Projekt áttekintése és célkitűzés
 
-A folyamatos tanulás (Continual Learning) célja, hogy a mély tanuló modellek új feladatokat sajátítsanak el egymás után úgy, hogy a korábban megszerzett tudásukat minél kevésbé veszítsék el[cite: 5]. Az orvosi diagnosztikában ez kiemelten fontos, hiszen az új intézmények, modalitások és képalkotó eljárások fokozatosan jelennek meg a rendszerekben[cite: 5].
+A folyamatos tanulás (Continual Learning) célja, hogy a mély tanuló modellek új feladatokat sajátítsanak el egymás után úgy, hogy a korábban megszerzett tudásukat minél kevésbé veszítsék el. Az orvosi diagnosztikában ez kiemelten fontos, hiszen az új intézmények, modalitások és képalkotó eljárások fokozatosan jelennek meg a rendszerekben.
 
-A kutatás fő kérdései[cite: 5]:
-* Mekkora katasztrofális felejtés (*catastrophic forgetting*) jelentkezik szekvenciális finomhangolás (*Sequential fine-tuning*) során[cite: 5]?
-* Hogyan befolyásolja a feladatok sorrendje (*task order*) és az adathalmazok közötti reprezentációs hasonlóság (*task similarity*) a végső átlagos pontosságot és a felejtés mértékét[cite: 5]?
-* Mely continual learning stratégiák (pl. Replay, EWC, paraméter-izoláció) képesek leghatékonyabban enyhíteni a tudásvesztést adott memória- és számítási korlátok mellett[cite: 5]?
+A kutatás fő kérdései:
+* Mekkora katasztrofális felejtés (*catastrophic forgetting*) jelentkezik szekvenciális finomhangolás (*Sequential fine-tuning*) során?
+* Hogyan befolyásolja a feladatok sorrendje (*task order*) és az adathalmazok közötti reprezentációs hasonlóság (*task similarity*) a végső átlagos pontosságot és a felejtés mértékét?
+* Mely continual learning stratégiák (pl. Replay, EWC, paraméter-izoláció) képesek leghatékonyabban enyhíteni a tudásvesztést adott memória- és számítási korlátok mellett?
 
 ---
 
 ## 🩺 Adathalmazok (MedMNIST 2D)
 
-A kísérletekben a szabványosított **MedMNIST v2** 2D orvosi képosztályozási feladatait használjuk a hivatalos train / validation / test partíciók mentén[cite: 5]:
+A kísérletekben a szabványosított **MedMNIST v2** 2D orvosi képosztályozási feladatait használjuk a hivatalos train / validation / test partíciók mentén:
 
-1. **PathMNIST** (9 osztály, szöveti patológia)[cite: 4, 6]
-2. **DermaMNIST** (7 osztály, bőrgyógyászati elváltozások)[cite: 4, 6]
-3. **OCTMNIST** (4 osztály, szemészeti retinális rétegfelvételek)[cite: 4, 6]
-4. **PneumoniaMNIST** (2 osztály, mellkas-röntgen tüdőgyulladás szűrés)[cite: 4, 6]
-5. **OrganAMNIST** (11 osztály, hasi CT axiális nézet)[cite: 4, 6]
+1. **PathMNIST** (9 osztály, szöveti patológia)
+2. **DermaMNIST** (7 osztály, bőrgyógyászati elváltozások)
+3. **OCTMNIST** (4 osztály, szemészeti retinális rétegfelvételek)
+4. **PneumoniaMNIST** (2 osztály, mellkas-röntgen tüdőgyulladás szűrés)
+5. **OrganAMNIST** (11 osztály, hasi CT axiális nézet)
 
 ---
 
 ## 🧠 Modellarchitektúra és Kísérleti Beállítások
 
-* **Beállítás:** Task-incremental Continual Learning (a feladat azonosítója mind a tanítás, mind az értékelés/inferencia közben ismert)[cite: 5, 9].
-* **Közös gerinchálózat (Backbone):** ResNet-18 architektúra, véletlen súlyinicializálással (`weights=None`), hogy tiszta referenciát biztosítson[cite: 6].
-* **Kimeneti rétegek:** Multi-head struktúra feladatspecifikus lineáris fejekkel (`nn.ModuleDict`), amelyek az adott task osztályszámához igazodnak[cite: 6, 9].
-* **Kísérleti protokoll:** Minden egyes feladat betanítását követően a modell azonnal kiértékelésre kerül az összes feladat tesztkészletén, felépítve a teljes $T \times T$-s teljesítménymátrixot[cite: 4, 5].
+* **Beállítás:** Task-incremental Continual Learning (a feladat azonosítója mind a tanítás, mind az értékelés/inferencia közben ismert).
+* **Közös gerinchálózat (Backbone):** ResNet-18 architektúra, véletlen súlyinicializálással (`weights=None`), hogy tiszta referenciát biztosítson.
+* **Kimeneti rétegek:** Multi-head struktúra feladatspecifikus lineáris fejekkel (`nn.ModuleDict`), amelyek az adott task osztályszámához igazodnak.
+* **Kísérleti protokoll:** Minden egyes feladat betanítását követően a modell azonnal kiértékelésre kerül az összes feladat tesztkészletén, felépítve a teljes $T \times T$-s teljesítménymátrixot.
 
 ---
 
 ## 📐 Kiértékelési Metrikák
 
-A kísérletek lezárásakor az $R \in \mathbb{R}^{T \times T}$ teljesítménymátrixból az alábbi kötelező continual learning mutatókat számítjuk ki és logoljuk[cite: 4, 5]:
+A kísérletek lezárásakor az $R \in \mathbb{R}^{T \times T}$ teljesítménymátrixból az alábbi kötelező continual learning mutatókat számítjuk ki és logoljuk:
 
 * **Végső átlagos pontosság ($A_T$):** Az utolsó fázis után az összes feladaton mért tesztpontosság számtani átlaga.
-* **Lépésenkénti átlagos pontosság ($A_i$):** Az $i$-edik feladat lefutása után az addig látott feladatok átlagos teljesítménye[cite: 4].
-* **Visszamenőleges transzfer (Backward Transfer – BWT):** A korábban megtanult feladatok pontosságvesztésének mértéke a folyamat legvégére a frissen betanított csúcsértékhez képest[cite: 4].
-* **Átlagos felejtés (Average Forgetting – $F$):** A tanítás során elért maximális pontosság és a legvégső pontosság különbsége feladatonként átlagolva[cite: 4].
-* **Előreirányuló transzfer (Forward Transfer – FWT):** A még nem tanult feladatokon elért teljesítmény mind a nulláról betanított izolált modellekhez (*Single-task oracle*), mind a tanítás előtti *zero-shot* értékekhez viszonyítva[cite: 4].
+* **Lépésenkénti átlagos pontosság ($A_i$):** Az $i$-edik feladat lefutása után az addig látott feladatok átlagos teljesítménye.
+* **Visszamenőleges transzfer (Backward Transfer – BWT):** A korábban megtanult feladatok pontosságvesztésének mértéke a folyamat legvégére a frissen betanított csúcsértékhez képest.
+* **Átlagos felejtés (Average Forgetting – $F$):** A tanítás során elért maximális pontosság és a legvégső pontosság különbsége feladatonként átlagolva.
+* **Előreirányuló transzfer (Forward Transfer – FWT):** A még nem tanult feladatokon elért teljesítmény mind a nulláról betanított izolált modellekhez (*Single-task oracle*), mind a tanítás előtti *zero-shot* értékekhez viszonyítva.
 
 ## 👥 Csapat
 **Ugrai Gergő**
