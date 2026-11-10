@@ -1,0 +1,18 @@
+# Fejlesztőkörnyezet konfigurációja
+.idea/
+.vscode/
+
+# Python gyorsítótárak
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Felesleges vázlatfájlok
+teszt.ipynb
+Új Szöveges dokumentum.txt
+Help/
+
+# Adathalmazok és nehéz modellek (hogy ne teljen be a GitHub tárhelyed)
+*.npz
+*.pt
+*.pth

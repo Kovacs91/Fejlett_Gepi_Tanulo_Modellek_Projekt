@@ -1,0 +1,7 @@
+{
+    "pathmnist": 61.9559,
+    "dermamnist": 70.8854,
+    "octmnist": 63.8393,
+    "pneumoniamnist": 68.3594,
+    "organamnist": 85.9375
+}

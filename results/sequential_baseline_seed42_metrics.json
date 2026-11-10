@@ -1,0 +1,48 @@
+{
+    "experiment_name": "sequential_baseline",
+    "seed": 42,
+    "timestamp": "2026-11-10 19:19:48",
+    "task_order": [
+        "pathmnist",
+        "dermamnist",
+        "octmnist",
+        "pneumoniamnist",
+        "organamnist"
+    ],
+    "final_average_accuracy": 49.933,
+    "backward_transfer": -30.4574,
+    "average_forgetting": 30.4574,
+    "forward_transfer_pre": 25.8004,
+    "forward_transfer_single": 1.3625,
+    "step_average_accuracies": {
+        "Step_1_pathmnist": 77.0229,
+        "Step_2_dermamnist": 51.1691,
+        "Step_3_octmnist": 46.4745,
+        "Step_4_pneumoniamnist": 45.0574,
+        "Step_5_organamnist": 49.933
+    },
+    "bwt_per_task": {
+        "pathmnist": -70.745,
+        "dermamnist": -2.3959,
+        "octmnist": -32.4777,
+        "pneumoniamnist": -16.2109
+    },
+    "forgetting_per_task": {
+        "pathmnist": 70.745,
+        "dermamnist": 2.3959,
+        "octmnist": 32.4777,
+        "pneumoniamnist": 16.2109
+    },
+    "fwt_pre_per_task": {
+        "dermamnist": 11.3542,
+        "octmnist": 24.442,
+        "pneumoniamnist": 61.5234,
+        "organamnist": 5.882
+    },
+    "fwt_single_per_task": {
+        "dermamnist": -1.6666,
+        "octmnist": -3.3482,
+        "pneumoniamnist": 9.5703,
+        "organamnist": 0.8945
+    }
+}

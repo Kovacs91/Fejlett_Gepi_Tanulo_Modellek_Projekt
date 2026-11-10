@@ -1,0 +1,5 @@
+Sorrend típus,Végső Átl. Pontosság (A_T) %,Visszamenőleges Transzfer (BWT) %,Átlagos Felejtés (F) %,FWT (Single-ref) %
+similar_first,39.6452,-39.7385,39.7385,2.0194
+dissimilar_alternating,49.811,-32.8069,32.8069,7.8732
+random_order_1,48.6148,-32.6067,32.6067,5.5359
+random_order_2,43.2543,-38.4424,38.4424,4.4729
