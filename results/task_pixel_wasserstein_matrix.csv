@@ -1,0 +1,6 @@
+,pathmnist,dermamnist,octmnist,pneumoniamnist,organamnist
+pathmnist,0.0,0.037,0.4737,0.0926,0.2091
+dermamnist,0.037,0.0,0.4369,0.0573,0.1723
+octmnist,0.4737,0.4369,0.0,0.3869,0.287
+pneumoniamnist,0.0926,0.0573,0.3869,0.0,0.1462
+organamnist,0.2091,0.1723,0.287,0.1462,0.0
