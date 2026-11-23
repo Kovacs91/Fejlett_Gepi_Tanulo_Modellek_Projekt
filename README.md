@@ -46,6 +46,37 @@ A kísérletek lezárásakor az $R \in \mathbb{R}^{T \times T}$ teljesítménym�
 * **Átlagos felejtés (Average Forgetting – $F$):** A tanítás során elért maximális pontosság és a legvégső pontosság különbsége feladatonként átlagolva.
 * **Előreirányuló transzfer (Forward Transfer – FWT):** A még nem tanult feladatokon elért teljesítmény mind a nulláról betanított izolált modellekhez (*Single-task oracle*), mind a tanítás előtti *zero-shot* értékekhez viszonyítva.
 
+## 🔬 3. Munkacsomag – Continual Learning módszerek
+
+A `main.ipynb` 3. munkacsomag fejezete a felejtést aktívan csökkentő eljárásokat implementálja. Mind az öt continual ág egyetlen közös futtatókereten (`run_continual_experiment`) osztozik, így azonos kiértékelési protokoll mellett közvetlenül összehasonlíthatók.
+
+| Módszer | Osztály / függvény | Erőforrásköltség |
+|---|---|---|
+| Sequential fine-tuning | `run_continual_experiment(method="sequential")` | – |
+| Replay / exemplar memory | `ExemplarBuffer` (class-balanced, fix 2000 mintás keret) | memória |
+| EWC | `EWC` (diagonális Fisher, online akkumuláció, λ = 5000) | plaszticitás |
+| Partial freezing | `AdapterResNet18(use_adapters=False)` + `freeze_backbone` | – |
+| Adapterek | `AdapterResNet18(use_adapters=True)`, zero-init 1×1 conv | paraméter (~3,1 % / feladat) |
+| Joint training (felső referencia) | `run_joint_training` (round-robin batching) | – |
+
+**Protokoll:** eredeti task sorrend, `seed = 42`, azonos optimizer és learning rate minden ágon. A validációs és teszt `DataLoader`-ek itt `drop_last=False` beállítással futnak, ezért a 3. munkacsomag `sequential` ága újra lefuttatja a baseline-t; a WP1 `sequential_baseline` számai nem vethetők össze közvetlenül az itteniekkel.
+
+**Futásonként mentett kimenetek** a `results/` mappába:
+
+```text
+wp3_<módszer>_seed42_R_matrix.csv    # nyers T x T mátrix
+wp3_<módszer>_seed42_config.json     # teljes konfiguráció + futásnapló (idő, paraméter, memória)
+wp3_<módszer>_seed42_metrics.json    # A_T, BWT, felejtés, FWT
+wp3_<módszer>_seed42_heatmap.png     # 300 DPI hőtérkép
+wp3_joint_seed42_metrics.json        # joint felső referencia
+wp3_method_comparison_seed42.csv     # összesítő táblázat (a mentett fájlokból regenerálható)
+wp3_method_comparison_seed42.png     # pontosság és felejtés módszerenként
+```
+
+Az elméleti háttér és a kódban elkészült részek részletes leírása: `notes/3_munkacsomag_dokumentacio.pdf`.
+
+---
+
 ## 👥 Csapat
 **Ugrai Gergő**
 
