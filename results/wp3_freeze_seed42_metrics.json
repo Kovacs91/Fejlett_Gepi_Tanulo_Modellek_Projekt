@@ -1,0 +1,48 @@
+{
+    "experiment_name": "wp3_freeze",
+    "seed": 42,
+    "timestamp": "2026-11-23 23:59:31",
+    "task_order": [
+        "pathmnist",
+        "dermamnist",
+        "octmnist",
+        "pneumoniamnist",
+        "organamnist"
+    ],
+    "final_average_accuracy": 57.8129,
+    "backward_transfer": 0.0,
+    "average_forgetting": 0.0,
+    "forward_transfer_pre": 19.3369,
+    "forward_transfer_single": -16.6251,
+    "step_average_accuracies": {
+        "Step_1_pathmnist": 72.5209,
+        "Step_2_dermamnist": 69.8016,
+        "Step_3_octmnist": 58.0011,
+        "Step_4_pneumoniamnist": 59.887,
+        "Step_5_organamnist": 57.8129
+    },
+    "bwt_per_task": {
+        "pathmnist": 0.0,
+        "dermamnist": 0.0,
+        "octmnist": 0.0,
+        "pneumoniamnist": 0.0
+    },
+    "forgetting_per_task": {
+        "pathmnist": 0.0,
+        "dermamnist": 0.0,
+        "octmnist": 0.0,
+        "pneumoniamnist": 0.0
+    },
+    "fwt_pre_per_task": {
+        "dermamnist": 11.1721,
+        "octmnist": 25.7,
+        "pneumoniamnist": 37.5,
+        "organamnist": 2.9756
+    },
+    "fwt_single_per_task": {
+        "dermamnist": -4.4281,
+        "octmnist": -27.9884,
+        "pneumoniamnist": 3.4355,
+        "organamnist": -37.5195
+    }
+}

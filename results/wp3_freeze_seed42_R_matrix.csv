@@ -1,0 +1,6 @@
+,pathmnist,dermamnist,octmnist,pneumoniamnist,organamnist
+after_pathmnist,72.5209,11.1721,25.7,37.5,2.9756
+after_dermamnist,72.5209,67.0823,25.7,37.5,2.9756
+after_octmnist,72.5209,67.0823,34.4,37.5,2.9756
+after_pneumoniamnist,72.5209,67.0823,34.4,65.5449,2.9756
+after_organamnist,72.5209,67.0823,34.4,65.5449,49.5163

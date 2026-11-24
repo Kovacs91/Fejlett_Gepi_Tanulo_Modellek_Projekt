@@ -1,0 +1,26 @@
+{
+    "experiment_name": "wp3_joint",
+    "seed": 42,
+    "timestamp": "2026-11-24 00:52:46",
+    "note": "FELSŐ REFERENCIA, nem fair continual baseline: minden adatot egyszerre lát.",
+    "strategy": "round-robin batching",
+    "steps_per_epoch": 761,
+    "epochs": 1,
+    "task_order": [
+        "pathmnist",
+        "dermamnist",
+        "octmnist",
+        "pneumoniamnist",
+        "organamnist"
+    ],
+    "per_task_accuracy": {
+        "pathmnist": 8.7465,
+        "dermamnist": 67.2319,
+        "octmnist": 26.0,
+        "pneumoniamnist": 70.0321,
+        "organamnist": 58.0943
+    },
+    "joint_average_accuracy": 46.021,
+    "total_parameters": 11193441,
+    "train_seconds": 2452.77
+}

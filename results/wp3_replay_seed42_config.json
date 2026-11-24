@@ -1,0 +1,159 @@
+{
+    "method": "replay",
+    "seed": 42,
+    "task_order": [
+        "pathmnist",
+        "dermamnist",
+        "octmnist",
+        "pneumoniamnist",
+        "organamnist"
+    ],
+    "config": {
+        "setting": "task-incremental continual learning, task-specifikus fejek",
+        "backbone": "torchvision resnet18, weights=None",
+        "task_order": [
+            "pathmnist",
+            "dermamnist",
+            "octmnist",
+            "pneumoniamnist",
+            "organamnist"
+        ],
+        "task_classes": {
+            "pathmnist": 9,
+            "dermamnist": 7,
+            "octmnist": 4,
+            "pneumoniamnist": 2,
+            "organamnist": 11
+        },
+        "seed": 42,
+        "epochs_per_task": 1,
+        "batch_size": 128,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "augmentation": "nincs (ToTensor + Normalize(mean=0.5, std=0.5))",
+        "train_drop_last": true,
+        "eval_drop_last": false,
+        "replay": {
+            "buffer_total_size": 2000,
+            "sampling": "class_balanced",
+            "allocation": "fix teljes keret, egyenlő elosztás az eddig látott taskok között"
+        },
+        "ewc": {
+            "lambda": 5000.0,
+            "fisher_batches": 50,
+            "fisher_type": "empirikus diagonális Fisher a valódi címkék log-likelihoodjából",
+            "accumulation": "online: a korábbi taskok Fisher-mátrixát összegezzük"
+        },
+        "adapter": {
+            "module": "1x1 conv residual adapter, zero-init",
+            "insertion": "layer1-layer4 stage-ek után",
+            "backbone_frozen_after_task_index": 1
+        },
+        "joint": {
+            "strategy": "round-robin batching",
+            "steps_per_epoch": "a leghosszabb train loader hossza"
+        }
+    },
+    "run_log": {
+        "method": "replay",
+        "seed": 42,
+        "per_task": [
+            {
+                "step": 1,
+                "task": "pathmnist",
+                "train_seconds": 475.56,
+                "trainable_parameters": 11193441,
+                "total_parameters": 11193441,
+                "memory": {
+                    "buffer_total_capacity": 2000,
+                    "stored_samples": 2000,
+                    "stored_per_task": {
+                        "pathmnist": 2000
+                    },
+                    "cumulative_train_samples": 89996,
+                    "relative_ratio_percent": 2.2223,
+                    "memory_bytes_float32": 18816000
+                }
+            },
+            {
+                "step": 2,
+                "task": "dermamnist",
+                "train_seconds": 70.0,
+                "trainable_parameters": 11193441,
+                "total_parameters": 11193441,
+                "memory": {
+                    "buffer_total_capacity": 2000,
+                    "stored_samples": 1894,
+                    "stored_per_task": {
+                        "pathmnist": 1000,
+                        "dermamnist": 894
+                    },
+                    "cumulative_train_samples": 97003,
+                    "relative_ratio_percent": 1.9525,
+                    "memory_bytes_float32": 17818752
+                }
+            },
+            {
+                "step": 3,
+                "task": "octmnist",
+                "train_seconds": 1043.88,
+                "trainable_parameters": 11193441,
+                "total_parameters": 11193441,
+                "memory": {
+                    "buffer_total_capacity": 2000,
+                    "stored_samples": 1998,
+                    "stored_per_task": {
+                        "pathmnist": 666,
+                        "dermamnist": 666,
+                        "octmnist": 666
+                    },
+                    "cumulative_train_samples": 194480,
+                    "relative_ratio_percent": 1.0274,
+                    "memory_bytes_float32": 18797184
+                }
+            },
+            {
+                "step": 4,
+                "task": "pneumoniamnist",
+                "train_seconds": 51.46,
+                "trainable_parameters": 11193441,
+                "total_parameters": 11193441,
+                "memory": {
+                    "buffer_total_capacity": 2000,
+                    "stored_samples": 2000,
+                    "stored_per_task": {
+                        "pathmnist": 500,
+                        "dermamnist": 500,
+                        "octmnist": 500,
+                        "pneumoniamnist": 500
+                    },
+                    "cumulative_train_samples": 199188,
+                    "relative_ratio_percent": 1.0041,
+                    "memory_bytes_float32": 18816000
+                }
+            },
+            {
+                "step": 5,
+                "task": "organamnist",
+                "train_seconds": 406.27,
+                "trainable_parameters": 11193441,
+                "total_parameters": 11193441,
+                "memory": {
+                    "buffer_total_capacity": 2000,
+                    "stored_samples": 2000,
+                    "stored_per_task": {
+                        "pathmnist": 400,
+                        "dermamnist": 400,
+                        "octmnist": 400,
+                        "pneumoniamnist": 400,
+                        "organamnist": 400
+                    },
+                    "cumulative_train_samples": 233749,
+                    "relative_ratio_percent": 0.8556,
+                    "memory_bytes_float32": 18816000
+                }
+            }
+        ],
+        "total_seconds": 2140.61
+    }
+}

@@ -1,0 +1,119 @@
+{
+    "method": "freeze",
+    "seed": 42,
+    "task_order": [
+        "pathmnist",
+        "dermamnist",
+        "octmnist",
+        "pneumoniamnist",
+        "organamnist"
+    ],
+    "config": {
+        "setting": "task-incremental continual learning, task-specifikus fejek",
+        "backbone": "torchvision resnet18, weights=None",
+        "task_order": [
+            "pathmnist",
+            "dermamnist",
+            "octmnist",
+            "pneumoniamnist",
+            "organamnist"
+        ],
+        "task_classes": {
+            "pathmnist": 9,
+            "dermamnist": 7,
+            "octmnist": 4,
+            "pneumoniamnist": 2,
+            "organamnist": 11
+        },
+        "seed": 42,
+        "epochs_per_task": 1,
+        "batch_size": 128,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "augmentation": "nincs (ToTensor + Normalize(mean=0.5, std=0.5))",
+        "train_drop_last": true,
+        "eval_drop_last": false,
+        "replay": {
+            "buffer_total_size": 2000,
+            "sampling": "class_balanced",
+            "allocation": "fix teljes keret, egyenlő elosztás az eddig látott taskok között"
+        },
+        "ewc": {
+            "lambda": 5000.0,
+            "fisher_batches": 50,
+            "fisher_type": "empirikus diagonális Fisher a valódi címkék log-likelihoodjából",
+            "accumulation": "online: a korábbi taskok Fisher-mátrixát összegezzük"
+        },
+        "adapter": {
+            "module": "1x1 conv residual adapter, zero-init",
+            "insertion": "layer1-layer4 stage-ek után",
+            "backbone_frozen_after_task_index": 1
+        },
+        "joint": {
+            "strategy": "round-robin batching",
+            "steps_per_epoch": "a leghosszabb train loader hossza"
+        }
+    },
+    "run_log": {
+        "method": "freeze",
+        "seed": 42,
+        "per_task": [
+            {
+                "step": 1,
+                "task": "pathmnist",
+                "train_seconds": 478.79,
+                "trainable_parameters": 11193441,
+                "total_parameters": 11193441,
+                "backbone_parameters": 11176512,
+                "adapter_parameters_total": 0,
+                "adapter_parameters_per_task": 0,
+                "parameter_growth_percent": 0.0
+            },
+            {
+                "step": 2,
+                "task": "dermamnist",
+                "train_seconds": 5.14,
+                "trainable_parameters": 16929,
+                "total_parameters": 11193441,
+                "backbone_parameters": 11176512,
+                "adapter_parameters_total": 0,
+                "adapter_parameters_per_task": 0,
+                "parameter_growth_percent": 0.0
+            },
+            {
+                "step": 3,
+                "task": "octmnist",
+                "train_seconds": 69.71,
+                "trainable_parameters": 16929,
+                "total_parameters": 11193441,
+                "backbone_parameters": 11176512,
+                "adapter_parameters_total": 0,
+                "adapter_parameters_per_task": 0,
+                "parameter_growth_percent": 0.0
+            },
+            {
+                "step": 4,
+                "task": "pneumoniamnist",
+                "train_seconds": 3.34,
+                "trainable_parameters": 16929,
+                "total_parameters": 11193441,
+                "backbone_parameters": 11176512,
+                "adapter_parameters_total": 0,
+                "adapter_parameters_per_task": 0,
+                "parameter_growth_percent": 0.0
+            },
+            {
+                "step": 5,
+                "task": "organamnist",
+                "train_seconds": 26.34,
+                "trainable_parameters": 16929,
+                "total_parameters": 11193441,
+                "backbone_parameters": 11176512,
+                "adapter_parameters_total": 0,
+                "adapter_parameters_per_task": 0,
+                "parameter_growth_percent": 0.0
+            }
+        ],
+        "total_seconds": 676.17
+    }
+}
